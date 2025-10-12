@@ -42,7 +42,7 @@ export const signUp = async(req,res)=>{
         //token generate
 
         let token = await getToken(user._id)
-        req.cookie("token", token,{
+        res.cookie("token", token,{
             httpOnly: true,
             secure: false,
             sameSite: "Strict",
@@ -76,7 +76,7 @@ export const login = async(req,res) =>{
             })
         }
          let token = await getToken(user._id)
-        req.cookie("token", token,{
+        res.cookie("token", token,{
             httpOnly: true,
             secure: false,
             sameSite: "Strict",
