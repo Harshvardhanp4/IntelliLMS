@@ -93,7 +93,10 @@ function Login() {
           >
             {loading ? <ClipLoader size={30} color="white" /> : "Login"}
           </button>
-          <span className="text-[15px] cursor-pointer underline">
+          <span
+            className="text-[15px] cursor-pointer underline"
+            onClick={() => navigate("/forget")}
+          >
             Forget password?
           </span>
           <div className="w-[80%] flex items-center gap-2">
