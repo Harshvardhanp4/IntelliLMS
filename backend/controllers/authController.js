@@ -2,6 +2,7 @@ import User from "../models/userModel.js"
 import validator from "validator"
 import bcrypt from "bcryptjs"
 import getToken from "../config/token.js"
+import sendMail from "../config/sendMail.js"
 
 
 //-------------------signup controller------------------
@@ -102,6 +103,93 @@ export const logOut = async (req,res)=>{
     }catch(error){
         return res.status(500).json({
             message:`Logout error ${error}`
+        })
+    }
+}
+
+//----------------setOtp Controller---------------//
+
+export const sendOTP = async (req,res)=>{
+    try{
+        const {email} = req.body
+        const user = await User.findOne({email})
+        if(!user){
+            return res.status(404).json({
+                message:"User not found"
+            })
+        }
+        const otp = Math.floor(1000 + Math.random()* 9000).toString();
+        user.resetOtp = otp,
+        user.otpExpires = Date.now() + 5 * 60 * 1000 //1000 ms
+        user.isOtpVerified = false
+
+        await user.save()
+        await sendMail(email, otp)
+        res.status(200).json({
+            msg:"Otp sent successfully"
+        })
+    }catch(error){
+        return res.status(500).json({
+            msg: "Error while sending OTP"
+        })
+    }
+}
+
+
+//----------------Verify OTP------------------------//
+
+
+export const verifyOTP = async(req,res)=>{
+    try{
+        const {email, otp} = req.body
+        const user = await User.findOne({email})
+        if(!user || user.resetOtp != otp || user.otpExpires < Date.now()){
+            return res.status(404).json({
+                message:"Invalid OTP"
+            })
+        }
+        user.isOtpVerified = true
+        user.resetOtp = undefined,
+        user.otpExpires = undefined
+        
+        await user.save();
+
+         res.status(200).json({
+            msg:"Otp Verified successfully"
+        })
+
+    }
+    catch{
+         return res.status(500).json({
+            msg: "Error while verifiying OTP"
+        })
+    }
+}
+
+
+//-------------------------ResetPassword----------------//
+
+export const ResetPassword = async (req,res) => {
+    try{
+        const {email, password} = req.body
+         const user = await User.findOne({email})
+        if(!user || !user.isOtpVerified){
+            return res.status(404).json({
+                message:"OTP Verification is required"
+            })
+        }
+        const hashPassword = await bcrypt.hash(password, 10);
+        user.password = hashPassword,
+        user.isOtpVerified = false,
+
+        await user.save()
+
+          res.status(200).json({
+            msg:"Reset Password successfully"
+        })
+    }catch(error){
+         return res.status(500).json({
+            msg: "Error while password reset"
         })
     }
 }
