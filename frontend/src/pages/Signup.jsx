@@ -8,6 +8,8 @@ import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 import { useDispatch } from "react-redux";
 import { setUserData } from "../redux/userSlice";
+import { signInWithPopup } from "firebase/auth";
+import { auth, provider } from "../../utils/firebase";
 
 function Signup() {
   const navigate = useNavigate();
@@ -35,6 +37,33 @@ function Signup() {
       console.log(error);
       setLoading(false);
       toast.error("Error while signing up");
+    }
+  };
+
+  const googleSignUp = async () => {
+    try {
+      const response = await signInWithPopup(auth, provider);
+      let user = response.user;
+      let Gname = user.displayName;
+      let Gemail = user.email;
+
+      const result = await axios.post(
+        serverUrl + "/api/auth/googleauth",
+        {
+          name: Gname,
+          email: Gemail,
+          role,
+        },
+        { withCredentials: true }
+      );
+      dispatch(setUserData(result.data));
+
+      navigate("/");
+      toast.success("Sign Up Successful");
+
+      console.log(response);
+    } catch (error) {
+      toast.error(error.response.data.message);
     }
   };
 
@@ -150,7 +179,10 @@ function Signup() {
             <div className="w-[25%] h-[0.5px] bg-[#c4c4c4]"></div>
           </div>
 
-          <div className="w-[80%] h-[40px] border-1 border-black rounded-[5px]n flex items-center justify-center ">
+          <div
+            className="w-[80%] h-[40px] border-1 border-black rounded-[5px]n flex items-center justify-center "
+            onClick={googleSignUp}
+          >
             <img src={google} className="w-[40px] -mr-2" alt="" />
             <span className="cursor-pointer">oogle</span>
           </div>
