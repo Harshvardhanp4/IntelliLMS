@@ -46,7 +46,7 @@ export function Navbar() {
 
           {!userData && (
             <IoPersonCircle
-              className="w-[50px] h-[50px] fill-black cursor-pointer"
+              className="w-[50px] h-[50px] fill-black border-white cursor-pointer"
               onClick={() => setShow((prev) => !prev)}
             ></IoPersonCircle>
           )}
@@ -59,7 +59,7 @@ export function Navbar() {
             </div>
           )}
           {userData?.role === "educator" && (
-            <div className="px-[20px] py-[10px] border-2 lg:border-white border-black lg:text-white bg-black text-black rounded-[10px] text-[18px] font-light  cursor pointer">
+            <div className="px-[20px] py-[10px] border-2 lg:border-white lg:text-white  text-black rounded-[10px] text-[18px] font-light  cursor pointer">
               Dashboard
             </div>
           )}
