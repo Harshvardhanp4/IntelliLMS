@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Home from "./pages/Home";
@@ -9,11 +8,11 @@ import getCurrentUser from "./custom_hooks/getCurrentUser";
 import { useSelector } from "react-redux";
 import Profile from "./pages/Profile";
 import ForgetPassword from "./pages/forgetPassword";
+import EditProfile from "./pages/EditProfile";
 
 export const serverUrl = "http://localhost:8000";
 
 function App() {
-  const [count, setCount] = useState(0);
   getCurrentUser();
   const { userData } = useSelector((state) => state.user);
   return (
@@ -37,6 +36,11 @@ function App() {
         <Route
           path="/forget"
           element={userData ? <ForgetPassword /> : <Navigate to={"/signup"} />}
+        ></Route>
+
+        <Route
+          path="/editprofile"
+          element={userData ? <EditProfile /> : <Navigate to={"/signup"} />}
         ></Route>
       </Routes>
     </>
