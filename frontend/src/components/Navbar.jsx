@@ -65,7 +65,10 @@ export function Navbar() {
             </div>
           )}
           {userData?.role === "educator" && (
-            <div className="px-[20px] py-[10px] border-2 lg:border-white lg:text-white  text-black rounded-[10px] text-[18px] font-light  cursor pointer">
+            <div
+              className="px-[20px] py-[10px] border-2 lg:border-white lg:text-white  text-black rounded-[10px] text-[18px] font-light  cursor-pointer"
+              onClick={() => navigate("/dashboard")}
+            >
               Dashboard
             </div>
           )}
@@ -106,10 +109,9 @@ export function Navbar() {
 
         <div
           className={`fixed top-0 left-0 w-[100vw] h-[100vh] bg-[#000000d6] flex items-center justify-center flex-col gap-5 z-10 lg:hidden 
-            ${
-              showHam
-                ? "translate-x-[0] transition duration-600"
-                : "translate-x-[-100%] transition duration-600"
+            ${showHam
+              ? "translate-x-[0] transition duration-600"
+              : "translate-x-[-100%] transition duration-600"
             }`}
         >
           <AiOutlineClose
@@ -141,7 +143,7 @@ export function Navbar() {
             My courses
           </div>
           {userData?.role === "educator" && (
-            <div className="w-[200px] h-[60px] border-2 border-white text-white flex items-center justify-center bg-black text-black rounded-[10px] text-[18px] font-light  cursor-pointer">
+            <div className="w-[200px] h-[60px] border-2 border-white text-white flex items-center justify-center bg-black text-black rounded-[10px] text-[18px] font-light  cursor-pointer" onClick={() => navigate("/dashbaord")}>
               Dashboard
             </div>
           )}

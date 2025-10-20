@@ -9,6 +9,8 @@ import { useSelector } from "react-redux";
 import Profile from "./pages/Profile";
 import ForgetPassword from "./pages/forgetPassword";
 import EditProfile from "./pages/EditProfile";
+import Dashboard from "./pages/Educator/Dashboard";
+import Courses from "./pages/Educator/Courses";
 
 export const serverUrl = "http://localhost:8000";
 
@@ -33,14 +35,35 @@ function App() {
           element={userData ? <Profile /> : <Navigate to={"/signup"} />}
         ></Route>
 
-        <Route
-          path="/forget"
-          element={userData ? <ForgetPassword /> : <Navigate to={"/signup"} />}
-        ></Route>
+        <Route path="/forget" element={<ForgetPassword />}></Route>
 
         <Route
           path="/editprofile"
           element={userData ? <EditProfile /> : <Navigate to={"/signup"} />}
+        ></Route>
+
+        {/* -----------------------COURSES ROUTES------------------------------------------ */}
+
+        <Route
+          path="/dashboard"
+          element={
+            userData?.role === "educator" ? (
+              <Dashboard />
+            ) : (
+              <Navigate to={"/signup"} />
+            )
+          }
+        ></Route>
+
+        <Route
+          path="/courses"
+          element={
+            userData?.role === "educator" ? (
+              <Courses />
+            ) : (
+              <Navigate to={"/signup"} />
+            )
+          }
         ></Route>
       </Routes>
     </>
