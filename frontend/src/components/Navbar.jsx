@@ -50,7 +50,13 @@ export function Navbar() {
               onClick={() => setShow((prev) => !prev)}
             ></IoPersonCircle>
           )}
-          {userData && (
+          {userData?.photoUrl ? (
+            <img
+              src={userData?.photoUrl}
+              className="w-[50px] h-[50px] rounded-full text-white flex items-center justify-center text-[20px] border-2 bg-black border-white cursor-pointer"
+              onClick={() => setShow((prev) => !prev)}
+            />
+          ) : (
             <div
               className="w-[50px] h-[50px] rounded-full text-white flex items-center justify-center text-[20px] border-2 bg-black border-white cursor-pointer"
               onClick={() => setShow((prev) => !prev)}
@@ -94,7 +100,7 @@ export function Navbar() {
         </div>
 
         <RxHamburgerMenu
-          className="w-[35px] h-[35px] lg:hidden fill-black cursor-pointer"
+          className="w-[35px] h-[35px] lg:hidden text-white cursor-pointer"
           onClick={() => setShowHam((prev) => !prev)}
         />
 
@@ -114,7 +120,12 @@ export function Navbar() {
           {!userData && (
             <IoPersonCircle className="w-[50px] h-[50px] fill-black cursor-pointer"></IoPersonCircle>
           )}
-          {userData && (
+          {userData?.photoUrl ? (
+            <img
+              src={userData?.photoUrl}
+              className="w-[50px] h-[50px] rounded-full text-white flex items-center justify-center text-[20px] border-2 bg-black border-white cursor-pointer"
+            />
+          ) : (
             <div className="w-[50px] h-[50px] rounded-full text-white flex items-center justify-center text-[20px] border-2 bg-black border-white cursor-pointer">
               {userData?.name.slice(0, 1).toUpperCase()}
             </div>
