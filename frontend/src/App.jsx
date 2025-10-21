@@ -12,13 +12,18 @@ import EditProfile from "./pages/EditProfile";
 import Dashboard from "./pages/Educator/Dashboard";
 import Courses from "./pages/Educator/Courses";
 import CreateCourses from "./pages/Educator/createCourses";
+import getCreatorCourse from "./custom_hooks/getCreatorCourse";
+import EditCourse from "./pages/Educator/EditCourse";
 
 
 export const serverUrl = "http://localhost:8000";
 
 function App() {
   getCurrentUser();
+  getCreatorCourse();
+
   const { userData } = useSelector((state) => state.user);
+
   return (
     <>
       <ToastContainer />
@@ -74,6 +79,18 @@ function App() {
           element={
             userData?.role === "educator" ? (
               <CreateCourses />
+            ) : (
+              <Navigate to={"/signup"} />
+            )
+          }
+        ></Route>
+
+
+        <Route
+          path="/editcourse/:courseId"
+          element={
+            userData?.role === "educator" ? (
+              <EditCourse />
             ) : (
               <Navigate to={"/signup"} />
             )

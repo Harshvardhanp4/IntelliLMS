@@ -1,58 +1,58 @@
-import mongoose, { Mongoose, Schema } from "mongoose";
+import mongoose from "mongoose";
 
 
-const courseSchema = new Mongoose.Schema({
-    title:{
+const courseSchema = new mongoose.Schema({
+    title: {
         type: String,
         required: true
 
     },
-    subtitle:{
-         type: String,
-       
+    subtitle: {
+        type: String,
+
     },
-    description:{
+    description: {
         type: String
     },
-    category:{
+    category: {
         type: String,
         required: true
 
     },
-    level:{
+    level: {
         type: String,
-        enum:["Beginner","Intermediate","Advanced"]
+        enum: ["Beginner", "Intermediate", "Advanced"]
     },
 
-     price:{
+    price: {
         type: Number,
     },
 
-    thumbnail:{
+    thumbnail: {
         type: String
     },
-    enrolledStudents:[{
+    enrolledStudents: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref:"User"
+        ref: "User"
     }],
-    lectures:[{
+    lectures: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref:"Lecture"
+        ref: "Lecture"
     }],
-    creator:{
+    creator: {
         type: mongoose.Schema.Types.ObjectId,
-        ref:"User"
+        ref: "User"
     },
-    isPublished:{
+    isPublished: {
         type: Boolean,
-        default:false
+        default: false
     },
-    reviews:{
+    reviews: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Review"
     }
 
-},{timestamps:true})
+}, { timestamps: true })
 
 const Course = mongoose.model("Course", courseSchema)
 
