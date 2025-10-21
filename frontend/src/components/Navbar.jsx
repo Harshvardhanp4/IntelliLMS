@@ -143,7 +143,7 @@ export function Navbar() {
             My courses
           </div>
           {userData?.role === "educator" && (
-            <div className="w-[200px] h-[60px] border-2 border-white text-white flex items-center justify-center bg-black text-black rounded-[10px] text-[18px] font-light  cursor-pointer" onClick={() => navigate("/dashbaord")}>
+            <div className="w-[200px] h-[60px] border-2 border-white text-white flex items-center justify-center bg-black text-black rounded-[10px] text-[18px] font-light  cursor-pointer" onClick={() => navigate("/dashboard")}>
               Dashboard
             </div>
           )}

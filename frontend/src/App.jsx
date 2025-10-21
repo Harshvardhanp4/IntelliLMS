@@ -11,6 +11,8 @@ import ForgetPassword from "./pages/forgetPassword";
 import EditProfile from "./pages/EditProfile";
 import Dashboard from "./pages/Educator/Dashboard";
 import Courses from "./pages/Educator/Courses";
+import CreateCourses from "./pages/Educator/createCourses";
+
 
 export const serverUrl = "http://localhost:8000";
 
@@ -60,6 +62,18 @@ function App() {
           element={
             userData?.role === "educator" ? (
               <Courses />
+            ) : (
+              <Navigate to={"/signup"} />
+            )
+          }
+        ></Route>
+
+
+        <Route
+          path="/createcourse"
+          element={
+            userData?.role === "educator" ? (
+              <CreateCourses />
             ) : (
               <Navigate to={"/signup"} />
             )
