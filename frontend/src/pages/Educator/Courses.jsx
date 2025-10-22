@@ -66,7 +66,7 @@ function Courses() {
                   <td className="px-4 py-3 ">
                     <span className={`px-3 py-1 rounded-full text-xs ${course.isPublished ? "bg-green-100 text-green-600" : "bg-red-100 text-red-600 "} `}>{course.isPublished ? "Published" : "Not Published"}</span>
                   </td>
-                  <td className="px-4 py-3 "><FaEdit className="text-gray-600 hover:text-green-600 cursor-pointer" onClick={() => navigate(`/editcourse ${course?._id}`)} /></td>
+                  <td className="px-4 py-3 "><FaEdit className="text-gray-600 hover:text-green-600 cursor-pointer" onClick={() => navigate(`/editcourse/${course?._id}`)} /></td>
                 </tr>
               ))}
             </tbody>
@@ -84,7 +84,7 @@ function Courses() {
                   {course.price ? <p className="tex-gray-600 text-xs mt-1">{course.price}</p> : <p className="tex-gray-600 text-xs mt-1">$ NA</p>}
                 </div>
 
-                <FaEdit className="text-gray-600 hover:text-green-600 cursor-pointer" onClick={() => navigate(`/editcourse ${course?._id}`)} /> {/*this will put course id in params*/}
+                <FaEdit className="text-gray-600 hover:text-green-600 cursor-pointer" onClick={() => navigate(`/editcourse/${course?._id}`)} /> {/*this will put course id in params*/}
                 <span span className={`w-fit px-3 py-1 text-xs rounded-full ${course.isPublished ? "bg-green-100 text-green-600" : " bg-red-100 text-red-600"}`}>{course?.isPublished ? "Published" : "Not Published"}</span>
 
               </div>
