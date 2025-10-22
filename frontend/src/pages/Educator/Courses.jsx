@@ -59,7 +59,7 @@ function Courses() {
                     {course?.thumbnail ? <img src={course?.thumbnail} className="w-25 h-14 object-cover rounded-md" alt="" /> : <img src={img} className="w-25 h-14 object-cover rounded-md" alt="" />}
                     <span>{course?.title}</span>
                   </td>
-                  {course?.price ? <td className="px-4 py-3 ">{course?.price}</td> :
+                  {course?.price ? <td className="px-4 py-3 ">₹{course?.price}</td> :
                     <td className="px-4 py-3 ">$ NA</td>}
 
 
@@ -81,7 +81,7 @@ function Courses() {
                 {course?.thumbnail ? <img src={course?.thumbnail} alt="" className="w-16 h-16 rounded-md object-cover" /> : <img src={img} alt="" className="w-16 h-16 rounded-md object-cover" />}
                 <div className="flex-1">
                   <h2 className="font-medium text-sm">{course?.title}</h2>
-                  {course.price ? <p className="tex-gray-600 text-xs mt-1">{course.price}</p> : <p className="tex-gray-600 text-xs mt-1">$ NA</p>}
+                  {course.price ? <p className="tex-gray-600 text-xs mt-1">₹{course.price}</p> : <p className="text-gray-600 text-xs mt-1">$ NA</p>}
                 </div>
 
                 <FaEdit className="text-gray-600 hover:text-green-600 cursor-pointer" onClick={() => navigate(`/editcourse/${course?._id}`)} /> {/*this will put course id in params*/}
