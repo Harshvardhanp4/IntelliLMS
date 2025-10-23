@@ -16,7 +16,6 @@ courseRouter.get("/getcourse/:courseId", isAuth, getCourseById)
 courseRouter.delete("/remove/:courseId", isAuth, removeCourses)
 
 
-
 //create lecture
 courseRouter.post("/createlecture/:courseId", isAuth, createLecture)
 

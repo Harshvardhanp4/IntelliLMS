@@ -7,13 +7,16 @@ export const createLecture = async (req, res) => {
     try {
         const { lectureTitle } = req.body
         const { courseId } = req.params
-        if (lectureTitle || courseId) {
+        if (!lectureTitle || !courseId) {
             return res.status(400).json({
                 message: "Lecture Title Required!"
             })
         }
         const lecture = await Lecture.create({ lectureTitle })
         const course = await Course.findById(courseId)
+        if (!course) {
+            return res.status(404).json({ message: "Course not found" })
+        }
         if (course) {
             course.lectures.push(lecture._id)
         }
