@@ -6,7 +6,10 @@ import ai from "../assets/ai.png";
 import ai1 from "../assets/SearchAi.png";
 import Logos from "./Logos";
 import ExploreCourses from "../components/ExploreCourses";
+import CardPage from "../components/CardPage";
+
 function Home() {
+
   return (
     <div className="w-[100%] overflow-hidden">
       <div className="w-[100%] lg:h-[140vh] h-[70vh] relative">
@@ -44,6 +47,7 @@ function Home() {
       </div>
       <Logos />
       <ExploreCourses />
+      <CardPage />
     </div>
   );
 }

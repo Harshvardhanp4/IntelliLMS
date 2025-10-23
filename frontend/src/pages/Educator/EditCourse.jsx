@@ -7,6 +7,8 @@ import axios from "axios";
 import { serverUrl } from "../../App";
 import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
+import { useDispatch, useSelector } from "react-redux";
+import { setCourseData } from "../../redux/courseSlice";
 
 function EditCourse() {
   const navigate = useNavigate();
@@ -24,7 +26,8 @@ function EditCourse() {
   const [backdImage, setBackdImage] = useState(null)
   const [loading, setLoading] = useState(false)
   const [loading1, setLoading1] = useState(false)
-
+  const dispatch = useDispatch()
+  const { courseData } = useSelector(state => state.course)
   const handleThumbnail = (e) => {
     const file = e.target.files[0]
     setBackdImage(file)
@@ -52,6 +55,7 @@ function EditCourse() {
       setFrontDImage(selectCourse.thumbnail || img)
       setIsPublished(selectCourse?.isPublished)
 
+
     }
   }, [selectCourse])
 
@@ -72,6 +76,16 @@ function EditCourse() {
     formData.append("isPublished", isPublished)
     try {
       const result = await axios.post(serverUrl + `/api/course/editcourse/${courseId}`, formData, { withCredentials: true })
+      const updatedCourse = result.data
+
+      if (updatedCourse && updatedCourse.isPublished) {
+        const updated = (courseData || []).map(c => c._id === updatedCourse._id ? updatedCourse : c)
+        if (!updated.some(c => c._id === updatedCourse._id)) updated.push(updatedCourse)
+        dispatch(setCourseData(updated))
+      } else {
+        const filtered = (courseData || []).filter(c => c._id !== courseId)
+        dispatch(setCourseData(filtered))
+      }
       console.log(result.data)
       setLoading(false)
       navigate("/courses")
@@ -88,6 +102,8 @@ function EditCourse() {
       setLoading1(true)
       const result = await axios.delete(serverUrl + `/api/course/remove/${courseId}`, { withCredentials: true })
       console.log(result.data)
+      const filtered = (courseData || []).filter(c => c._id !== courseId)
+      dispatch(setCourseData(filtered))
       setLoading1(false)
       toast.success("Course Removed Successfully")
       navigate("/courses")
