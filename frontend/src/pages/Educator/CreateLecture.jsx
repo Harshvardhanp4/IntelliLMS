@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaArrowLeftLong } from 'react-icons/fa6'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux"
@@ -7,6 +7,7 @@ import axios from 'axios';
 import { ClipLoader } from 'react-spinners';
 import { setLectureData } from '../../redux/lectureSlice';
 import { toast } from 'react-toastify';
+import { FaEdit } from 'react-icons/fa';
 function CreateLecture() {
     const navigate = useNavigate();
     const { courseId } = useParams();
@@ -33,6 +34,19 @@ function CreateLecture() {
         }
     }
 
+    useEffect(() => {
+        const getCourseLecture = async () => {
+            try {
+                const result = await axios.get(serverUrl + `/api/course/courselecture/${courseId}`, { withCredentials: true })
+                dispatch(setLectureData(result.data.lectures))
+                console.log(result.data)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        getCourseLecture()
+    }, [])
+
 
 
 
@@ -52,6 +66,17 @@ function CreateLecture() {
                         <button className='flex items-center gap-2 px-4 py-2 rounded-md bg-gray-200 hover:bg-gray-300 text-sm font-medium cursor-pointer' onClick={() => navigate(`/editcourse/${courseId}`)} ><FaArrowLeftLong size={10} />Back to Course</button>
                         <button className='px-5 py-2 rounded-md bg-black text-white hover:bg-gray-600 transition-all text-sm font-medium shadow cursor-pointer' disabled={loading} onClick={handleCreateLecture}>{loading ? <ClipLoader size={30} color='white' /> : "+ Create Lecture"}</button>
                     </div>
+                    {/* lecture list  */}
+                    <div className='space-y-2'>
+                        {lectureData?.map((lecture, index) => (
+                            <div key={index} className='bg-gray-100 rounded-md flex justify-between items-center p-3 text-sm font-medium text-gray-800'>
+
+                                <span>Lecture-{index + 1} : {lecture.lectureTitle} </span>
+                                <FaEdit className='text-gray-900 hover:text-gray-400 cursor-pointer' onClick={() => navigate(`/editlecture/${courseId}/${lecture._id}`)} />
+                            </div>
+                        ))}
+                    </div>
+
                 </div>
             </div>
 
