@@ -19,7 +19,7 @@ import AllCourses from "./pages/AllCourses";
 import CreateLecture from "./pages/Educator/CreateLecture";
 import EditLecture from "./pages/Educator/EditLecture";
 import ViewCourses from "./pages/ViewCourses";
-import ScrollToTop from "./components/ScrollToTop";
+import ScrollToTop from "./custom_hooks/ScrollToTop";
 
 
 export const serverUrl = "http://localhost:8000";

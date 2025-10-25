@@ -6,6 +6,7 @@ import authRouter from './routes/authRoute.js';
 import cors from "cors";
 import userRouter from './routes/userRoute.js';
 import courseRouter from './routes/courseRoute.js';
+import paymentRouter from './routes/paymentRoute.js';
 dotenv.config()
 
 const port = process.env.PORT
@@ -21,6 +22,7 @@ app.use(cors({
 app.use("/api/auth", authRouter)
 app.use("/api/user", userRouter)
 app.use("/api/course", courseRouter)
+app.use("/api/order", paymentRouter)
 
 
 app.get("/", (req, res) => {

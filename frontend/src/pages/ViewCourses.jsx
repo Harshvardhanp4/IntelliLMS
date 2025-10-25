@@ -15,6 +15,7 @@ import Card from "../components/Card";
 function ViewCourses() {
     const navigate = useNavigate();
     const { courseData } = useSelector(state => state.course);
+    const { userData } = useSelector(state => state.user)
     const { courseId } = useParams();
     const { selectedCourse } = useSelector(state => state.course)
     const dispatch = useDispatch();
@@ -63,6 +64,16 @@ function ViewCourses() {
     }, [creatorData, courseData])
 
 
+    const handleEnroll = async (userId, courseId) => {
+        try {
+            const orderData = await axios.post(serverUrl + "/api/order/razorpay-order", { userId, courseId }, { withCredentials: true })
+            console.log(orderData)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+
 
     return (
         <div className="min-h-screen bg-gray-50 p-6">
@@ -92,7 +103,7 @@ function ViewCourses() {
                                 <li> ✓  10+ hours of video content</li>
                                 <li> ✓ Lifetime access to course materials</li>
                             </ul>
-                            <button className="bg-black text-white px-6 py-2 rounded hover:bg-gray-600 mt-3 cursor-pointer">Enroll Now!</button>
+                            <button className="bg-black text-white px-6 py-2 rounded hover:bg-gray-600 mt-3 cursor-pointer" onClick={() => handleEnroll(userData?._id, courseId)}>Enroll Now!</button>
                         </div>
                     </div>
                 </div>
@@ -185,7 +196,7 @@ function ViewCourses() {
 
             </div>
 
-        </div>
+        </div >
     )
 }
 
