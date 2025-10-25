@@ -18,6 +18,7 @@ import getPublishedCourse from "./custom_hooks/getPublishedCourse";
 import AllCourses from "./pages/AllCourses";
 import CreateLecture from "./pages/Educator/CreateLecture";
 import EditLecture from "./pages/Educator/EditLecture";
+import ViewCourses from "./pages/ViewCourses";
 
 
 export const serverUrl = "http://localhost:8000";
@@ -99,13 +100,26 @@ function App() {
         <Route
           path="/editcourse/:courseId"
           element={
-            userData?.role === "educator" ? (
+            userData ? (
               <EditCourse />
             ) : (
               <Navigate to={"/signup"} />
             )
           }
         ></Route>
+
+
+        <Route
+          path="/viewcourse/:courseId"
+          element={
+            userData?.role === "educator" ? (
+              <ViewCourses />
+            ) : (
+              <Navigate to={"/signup"} />
+            )
+          }
+        ></Route>
+
 
         {/* LECTURE ROUTE */}
 

@@ -2,11 +2,11 @@ import uploadOnCloudinary from "../config/cloudinary.js"
 import Course from "../models/courseModel.js"
 
 
-export const createCourse = async (req,res) => {
+export const createCourse = async (req, res) => {
     try {
-        const {title, category} = req.body
-        if(!title || !category){
-            return res.status(400).json({message:"title or category is requuired"})
+        const { title, category } = req.body
+        if (!title || !category) {
+            return res.status(400).json({ message: "title or category is requuired" })
         }
         const course = await Course.create({
             title,
@@ -16,100 +16,100 @@ export const createCourse = async (req,res) => {
         return res.status(201).json(course)
 
     } catch (error) {
-         return res.status(500).json({
-            msg:"Error while creating course"
+        return res.status(500).json({
+            msg: "Error while creating course"
         })
     }
 }
 
-export const getPublishedCourses = async (req,res) => {
+export const getPublishedCourses = async (req, res) => {
     try {
-        const courses = await Course.find({isPublished:true})
-        if(!courses){
-            return res.status(400).json({message:"Courses not found"})
+        const courses = await Course.find({ isPublished: true }).populate("lectures")
+        if (!courses) {
+            return res.status(400).json({ message: "Courses not found" })
         }
         return res.status(200).json(courses)
     } catch (error) {
-         return res.status(500).json({
-            msg:"Error while fetching course"
+        return res.status(500).json({
+            msg: "Error while fetching course"
         })
     }
 }
 
-export const getCreatorCourses = async (req,res)=>{
+export const getCreatorCourses = async (req, res) => {
     try {
         const userId = req.userId
-        const courses = await Course.find({creator:userId})
+        const courses = await Course.find({ creator: userId })
 
-         if(!courses){
-            return res.status(400).json({message:"Courses not found"})
+        if (!courses) {
+            return res.status(400).json({ message: "Courses not found" })
         }
         return res.status(200).json(courses)
 
-     } catch (error) {
+    } catch (error) {
         return res.status(500).json({
-            msg:"Error while fetching courses"
+            msg: "Error while fetching courses"
         })
     }
 }
 
-export const editCourse = async (req,res) => {
+export const editCourse = async (req, res) => {
     try {
-        const {courseId} = req.params
-        const {title, subTitle, description, category, level, isPublished, price} = req.body
+        const { courseId } = req.params
+        const { title, subTitle, description, category, level, isPublished, price } = req.body
         let thumbnail
-        if(req.file){
+        if (req.file) {
             thumbnail = await uploadOnCloudinary(req.file.path)
         }
         let course = await Course.findById(courseId)
-        if(!course){
-               return res.status(400).json({message:"Courses not found"}) 
+        if (!course) {
+            return res.status(400).json({ message: "Courses not found" })
         }
 
 
-        const updateData = {title, subTitle, description, category, level, isPublished, price, thumbnail}
+        const updateData = { title, subTitle, description, category, level, isPublished, price, thumbnail }
 
-        course = await Course.findByIdAndUpdate(courseId, updateData,{new:true})
+        course = await Course.findByIdAndUpdate(courseId, updateData, { new: true })
         return res.status(200).json(course)
 
     } catch (error) {
         return res.status(500).json({
-            msg:"Failed to edit course"
+            msg: "Failed to edit course"
         })
     }
 }
 
-export const getCourseById = async (req,res) => {
+export const getCourseById = async (req, res) => {
     try {
-        const {courseId} = req.params
+        const { courseId } = req.params
         let course = await Course.findById(courseId)
 
-        if(!course){
-            return res.status(400).json({message:"Courses not found"}) 
+        if (!course) {
+            return res.status(400).json({ message: "Courses not found" })
         }
         return res.status(200).json(course)
 
     } catch (error) {
-         return res.status(500).json({
-            msg:"Failed to get course"
+        return res.status(500).json({
+            msg: "Failed to get course"
         })
     }
 }
 
-export const removeCourses = async (req,res) => {
+export const removeCourses = async (req, res) => {
     try {
-        const {courseId} = req.params
+        const { courseId } = req.params
         let course = await Course.findById(courseId)
 
-        if(!course){
-            return res.status(400).json({message:"Courses not found"}) 
+        if (!course) {
+            return res.status(400).json({ message: "Courses not found" })
         }
-        course = await Course.findByIdAndDelete(courseId, {new:true})
-        return res.status(200).json({message: "Course Removed"})
-        
+        course = await Course.findByIdAndDelete(courseId, { new: true })
+        return res.status(200).json({ message: "Course Removed" })
+
     } catch (error) {
-         return res.status(500).json({
-            msg:"Failed to get course"
+        return res.status(500).json({
+            msg: "Failed to get course"
         })
     }
 }
