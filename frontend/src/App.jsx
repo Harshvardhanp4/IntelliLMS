@@ -20,6 +20,8 @@ import CreateLecture from "./pages/Educator/CreateLecture";
 import EditLecture from "./pages/Educator/EditLecture";
 import ViewCourses from "./pages/ViewCourses";
 import ScrollToTop from "./custom_hooks/ScrollToTop";
+import ViewLecture from "./pages/ViewLecture";
+import MyEnrolledCourses from "./pages/MyEnrolledCourses";
 
 
 export const serverUrl = "http://localhost:8000";
@@ -60,7 +62,7 @@ function App() {
 
         <Route
           path="/allcourses"
-          element={<AllCourses />}
+          element={userData ? <AllCourses /> : <Navigate to={"/signup"} />}
         ></Route>
 
         {/* -----------------------COURSES ROUTES------------------------------------------ */}
@@ -115,7 +117,7 @@ function App() {
         <Route
           path="/viewcourse/:courseId"
           element={
-            userData?.role === "educator" ? (
+            userData ? (
               <ViewCourses />
             ) : (
               <Navigate to={"/signup"} />
@@ -123,8 +125,20 @@ function App() {
           }
         ></Route>
 
+        <Route
+          path="/mycourses"
+          element={
+            userData ? (
+              <MyEnrolledCourses />
+            ) : (
+              <Navigate to={"/signup"} />
+            )
+          }
+        ></Route>
 
-        {/* LECTURE ROUTE */}
+
+
+        {/*--------- LECTURE ROUTE -----------------*/}
 
         <Route
           path="/createlecture/:courseId"
@@ -147,6 +161,18 @@ function App() {
             )
           }
         ></Route>
+
+        <Route
+          path="/viewlecture/:courseId"
+          element={
+            userData ? (
+              <ViewLecture />
+            ) : (
+              <Navigate to={"/signup"} />
+            )
+          }
+        ></Route>
+
       </Routes >
     </>
 

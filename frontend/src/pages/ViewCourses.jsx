@@ -9,6 +9,7 @@ import axios from "axios"
 import img from "../assets/empty.jpg"
 import { serverUrl } from "../App";
 import Card from "../components/Card";
+import { toast } from "react-toastify";
 
 
 
@@ -22,6 +23,7 @@ function ViewCourses() {
     const [selectedLecture, setSelectedLecture] = useState(null)
     const [creatorData, setCreatorData] = useState(null)
     const [creatorCourses, setCreatorCourses] = useState(null)
+    const [isEnrolled, setIsEnrolled] = useState(false);
 
     const fetchCourseData = async () => {
         courseData.map((course) => {
@@ -50,9 +52,17 @@ function ViewCourses() {
         handleCreator()
     }, [selectedCourse])
 
+    const checkEnrollment = () => {
+        const verify = userData?.enrolledCourses?.some(c => (typeof c === "string" ? c : c._id).toString() === courseId?.toString())
+        if (verify) {
+            setIsEnrolled(true)
+        }
+    }
+
     useEffect(() => {
         fetchCourseData()
-    }, [courseData, courseId])
+        checkEnrollment()
+    }, [courseData, courseId, userData])
 
     useEffect(() => {
         if (creatorData?._id && courseData.length > 0) {
@@ -78,7 +88,21 @@ function ViewCourses() {
                 order_id: orderData?.data.id,
                 handler: async function (response) {
                     console.log("RazorPay Response", response)
+
+                    try {
+                        const verfiyPayment = await axios.post(serverUrl + "/api/order/verifypayment", {
+                            ...response,
+                            courseId,
+                            userId
+                        }, { withCredentials: true })
+                        setIsEnrolled(true)
+                        toast.success(verfiyPayment.data.message)
+
+                    } catch (error) {
+                        toast.error(error.response.data.message)
+                    }
                 }
+
             }
 
             const rzp = new window.Razorpay(options)
@@ -86,6 +110,7 @@ function ViewCourses() {
 
         } catch (error) {
             console.log(error)
+            toast.error("Something went wrong")
         }
     }
 
@@ -119,7 +144,7 @@ function ViewCourses() {
                                 <li> ✓  10+ hours of video content</li>
                                 <li> ✓ Lifetime access to course materials</li>
                             </ul>
-                            <button className="bg-black text-white px-6 py-2 rounded hover:bg-gray-600 mt-3 cursor-pointer" onClick={() => handleEnroll(userData?._id, courseId)}>Enroll Now!</button>
+                            {!isEnrolled ? <button className="bg-black text-white px-6 py-2 rounded hover:bg-gray-600 mt-3 cursor-pointer" onClick={() => handleEnroll(userData?._id, courseId)}>Enroll Now!</button> : <button className="bg-green-700 text-white px-6 py-2 rounded hover:bg-green-400 hover:text-black hover:border-2 border-black mt-3 cursor-pointer" onClick={() => navigate(`/viewlecture/${courseId}`)}>Watch Now</button>}
                         </div>
                     </div>
                 </div>

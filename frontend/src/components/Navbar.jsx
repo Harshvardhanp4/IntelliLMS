@@ -95,7 +95,7 @@ export function Navbar() {
               >
                 My profile
               </span>
-              <span className="bg-[black] text-white px-[30px] py-[10px] rounded-2xl hover:bg-gray-600 cursor-pointer">
+              <span className="bg-[black] text-white px-[30px] py-[10px] rounded-2xl hover:bg-gray-600 cursor-pointer" onClick={() => navigate("/mycourses")}>
                 My courses
               </span>
             </div>
@@ -139,7 +139,7 @@ export function Navbar() {
             My profile
           </div>
 
-          <div className="w-[200px] h-[60px] border-2 border-white text-white flex items-center justify-center bg-black text-black rounded-[10px] text-[18px] font-light  cursor-pointer">
+          <div className="w-[200px] h-[60px] border-2 border-white text-white flex items-center justify-center bg-black text-black rounded-[10px] text-[18px] font-light  cursor-pointer" onClick={() => navigate("/mycourses")}>
             My courses
           </div>
           {userData?.role === "educator" && (

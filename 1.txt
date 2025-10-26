@@ -1,0 +1,2 @@
+RAZORPAY DUMMY UPI = success@razorpay
+RAZORPAY DUMMY FAIL UPI = failure@razorpay
