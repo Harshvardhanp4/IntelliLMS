@@ -68,6 +68,22 @@ function ViewCourses() {
         try {
             const orderData = await axios.post(serverUrl + "/api/order/razorpay-order", { userId, courseId }, { withCredentials: true })
             console.log(orderData)
+
+            const options = {
+                key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+                amount: orderData?.data.amount,
+                currency: 'INR',
+                name: "INTELLIMS",
+                description: "COURSE ENROLLMENT PAYMENT",
+                order_id: orderData?.data.id,
+                handler: async function (response) {
+                    console.log("RazorPay Response", response)
+                }
+            }
+
+            const rzp = new window.Razorpay(options)
+            rzp.open()
+
         } catch (error) {
             console.log(error)
         }
