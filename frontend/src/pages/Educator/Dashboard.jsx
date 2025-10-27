@@ -2,10 +2,26 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { MdOutlineWavingHand } from "react-icons/md";
 import { FaArrowLeftLong } from "react-icons/fa6";
+import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
 
 function Dashboard() {
   const navigate = useNavigate();
   const { userData } = useSelector(state => state.user)
+  const { creatorCourseData } = useSelector(state => state.course)
+
+  const CourseProgressData = creatorCourseData?.map((course) => ({
+    name: course.title?.slice(0, 10) + "...",
+    lectures: course.lectures?.length || 0
+
+  })) || [];
+
+  const EnrollData = creatorCourseData?.map((course) => ({
+    name: course.title.slice(0, 10) + "...",
+    enrolled: course.enrolledStudents?.length || 0
+
+  })) || [];
+
+
   return <div className="flex min-h-screen bg-gray-100">
     <div className="w-full px-6 py-10 bg-gray-50 space-y-10">
       {/* MAIN SECTION */}
@@ -23,11 +39,41 @@ function Dashboard() {
 
 
       {/* GRAPH SECTION */}
-      <div>
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* COURSE PROGRESS GRAPH */}
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <h2 className="text-lg font-semibold mb-4">Course Progress (Lecture)</h2>
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={CourseProgressData}>
+              <CartesianGrid strokeDasharray="3  3" />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Bar dataKey="lectures" fill="black" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+
+
+        {/* ENROLLED DATA */}
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <h2 className="text-lg font-semibold mb-4">Students Enrollment (Lecture)</h2>
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={EnrollData}>
+              <CartesianGrid strokeDasharray="3  3" />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Bar dataKey="enrolled" fill="black" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
 
       </div>
+
+
     </div>
-  </div>;
+  </div >;
 }
 
 export default Dashboard;

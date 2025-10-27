@@ -1,5 +1,9 @@
 import { useNavigate } from "react-router-dom"
 import logo from "../assets/ims_logo.png"
+import { CiInstagram } from "react-icons/ci";
+import { FaXTwitter } from "react-icons/fa6";
+import { FaGithub } from "react-icons/fa";
+import { FaLinkedinIn } from "react-icons/fa";
 function Footer() {
     const navigate = useNavigate();
     return (
@@ -24,10 +28,10 @@ function Footer() {
                 <div className="lg:w-[30%] md:w-[100%]">
                     <div className="text-white font-semibold mb-2">About Me:-</div>
                     <ul className="text-sm space-y-1">
-                        <li className="hover:text-white cursor-pointer" onClick={() => window.open("https://www.linkedin.com/in/harshvardhanp4/")}>Linkedin</li>
-                        <li className="hover:text-white cursor-pointer" onClick={() => window.open("https://github.com/Harshvardhanp4")}>Github</li>
-                        <li className="hover:text-white cursor-pointer" onClick={() => window.open("https://x.com/harshspeaks04")}>Twitter</li>
-                        <li className="hover:text-white cursor-pointer" onClick={() => window.open("https://www.linkedin.com/in/harshvardhanp4/")}>Instagram</li>
+                        <li className="hover:text-white cursor-pointer flex items-center gap-x-1" onClick={() => window.open("https://www.linkedin.com/in/harshvardhanp4/")}><FaLinkedinIn />| Linkedin</li>
+                        <li className="hover:text-white cursor-pointer flex items-center gap-x-1" onClick={() => window.open("https://github.com/Harshvardhanp4")}><FaGithub />| Github</li>
+                        <li className="hover:text-white cursor-pointer flex items-center gap-x-1" onClick={() => window.open("https://x.com/harshspeaks04")}><FaXTwitter />| Twitter</li>
+                        <li className="hover:text-white cursor-pointer flex items-center gap-x-1" onClick={() => window.open("https://www.linkedin.com/in/harshvardhanp4/")}><CiInstagram />| Instagram</li>
                     </ul>
                 </div>
             </div>
