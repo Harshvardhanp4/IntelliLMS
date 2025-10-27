@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 function Card({ title, category, price, id, thumbnail }) {
     const navigate = useNavigate();
     return (
-        <div className='max-w-sm w-full bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 border border-gray-300 hover:shadow-cyan-300 cursor-pointer' onClick={() => navigate(`/viewcourse/${id}`)}>
+        <div className='max-w-sm w-full bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 border border-gray-300 hover:shadow-amber-300 cursor-pointer' onClick={() => navigate(`/viewcourse/${id}`)}>
             <img src={thumbnail} alt="" className='w-full h-48 object-cover' />
             <div className='p-5 space-y-2'>
                 <h2 className='text-lg font-semibold text-gray-900'>{title}</h2>
