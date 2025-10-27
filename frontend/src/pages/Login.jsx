@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { setUserData } from "../redux/userSlice";
 import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../../utils/firebase";
+import { FaArrowLeftLong } from "react-icons/fa6";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -67,6 +68,7 @@ function Login() {
 
   return (
     <div className="bg-[#dddbdb] w-[100vw] h-[100vh] flex items-center justify-center">
+      <FaArrowLeftLong className="absolute top-[3%] md:top-[6%] left-[5%] w-[22px] h-[22px] cursor-pointer" onClick={() => navigate("/")} />
       <form
         className="w-[90%] md:w-200 h-150 bg-white shadow-xl rounded-2xl flex"
         onSubmit={(e) => e.preventDefault()}
