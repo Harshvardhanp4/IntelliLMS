@@ -9,7 +9,7 @@ function Profile() {
     <div className="min-h-screen bg-gray-100 px-4 py-10 flex items-center justify-center">
       <div className="bg-white shadow-lg rounded-2xl p-8 max-w-xl w-full relative">
         <FaArrowLeftLong
-          className="absolute top-[8%] left-[5%] w-[22px] h-[22px] cursor-pointer"
+          className="absolute top-[8%] left-[5%] w-[22px] h-[22px] cursor-pointer "
           onClick={() => navigate("/")}
         />
         <div className="flex flex-col items-center text-center">
@@ -31,12 +31,12 @@ function Profile() {
         </div>
         <div className="mt-6 space-y-4">
           <div className="text-sm flex items-center justify-start gap-1">
-            <span className="font-semibold text-gray-700">Email:</span>
-            <span>{userData.email}</span>
+            <span className="font-semibold text-gray-700 text-lg">Email:</span>
+            <span className="font-semibold text-gray-700 text-lg">{userData.email}</span>
           </div>
           <div className="text-sm flex items-center justify-start gap-1">
-            <span className="font-semibold text-gray-700">Bio:</span>
-            <span>{userData.description}</span>
+            <span className="font-semibold text-gray-700 text-md">Bio:</span>
+            <span className="font-semibold text-gray-700 text-md">{userData.description}</span>
           </div>
           <div className="text-sm flex items-center justify-start gap-1">
             <span className="font-semibold text-gray-700">
@@ -47,7 +47,7 @@ function Profile() {
         </div>
         <div className="mt-6 flex justify-center gap-4">
           <button
-            className="px-5 py-2 rounded bg-black text-white active:bg-[#4b4b4b] cursor-pointer transition"
+            className="px-5 py-2 rounded bg-black text-white active:bg-[#4b4b4b] cursor-pointer transition hover:bg-gray-500"
             onClick={() => navigate("/editprofile")}
           >
             Edit Profile

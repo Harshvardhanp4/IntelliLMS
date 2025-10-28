@@ -10,6 +10,7 @@ import img from "../assets/empty.jpg"
 import { serverUrl } from "../App";
 import Card from "../components/Card";
 import { toast } from "react-toastify";
+import { ClipLoader } from "react-spinners";
 
 
 
@@ -24,6 +25,10 @@ function ViewCourses() {
     const [creatorData, setCreatorData] = useState(null)
     const [creatorCourses, setCreatorCourses] = useState(null)
     const [isEnrolled, setIsEnrolled] = useState(false);
+    const [rating, setRating] = useState(0)
+    const [comment, setComment] = useState("")
+    const [loading, setLoading] = useState(false)
+
 
     const fetchCourseData = async () => {
         courseData.map((course) => {
@@ -44,8 +49,12 @@ function ViewCourses() {
                     const result = await axios.post(serverUrl + "/api/course/creator", { userId: selectedCourse?.creator }, { withCredentials: true })
                     console.log(result.data)
                     setCreatorData(result.data)
+                    setRating(0)
+                    setComment("")
                 } catch (error) {
                     console.log(error)
+                    setRating(0)
+                    setComment("")
                 }
             }
         }
@@ -111,6 +120,20 @@ function ViewCourses() {
         } catch (error) {
             console.log(error)
             toast.error("Something went wrong")
+        }
+    }
+
+    const handleReview = async () => {
+        setLoading(true)
+        try {
+            const result = await axios.post(serverUrl + "/api/review/createreview", { rating, comment, courseId }, { withCredentials: true })
+            setLoading(false)
+            toast.success("Review Added!")
+            console.log(result.data)
+        } catch (error) {
+            setLoading(false)
+            console.log(error)
+            toast.error("Error while adding review / You have already added!")
         }
     }
 
@@ -204,12 +227,12 @@ function ViewCourses() {
                         <div className="flex gap-1 mb-2">
                             {
                                 [1, 2, 3, 4, 5].map((star) => (
-                                    <FaStar key={star} className="fill-gray-300" />
+                                    <FaStar key={star} className={star <= rating ? "fill-amber-400" : ""} onClick={() => setRating(star)} />
                                 ))
                             }
                         </div>
-                        <textarea className="w-full border border-gray-300 rounded-lg p-2" placeholder="Write your review here.." rows={3}></textarea>
-                        <button className="bg-black text-white mt-3 px-4 py-2 rounded hover:bg-gray-800 cursor-pointer">Submit Review</button>
+                        <textarea onChange={(e) => setComment(e.target.value)} className="w-full border border-gray-300 rounded-lg p-2" placeholder="Write your review here.." rows={3}></textarea>
+                        <button className="bg-black text-white mt-3 px-4 py-2 rounded hover:bg-gray-800 cursor-pointer" disabled={loading} onClick={handleReview}>{loading ? <ClipLoader size={30} color="white" /> : "Submit Review"}</button>
                     </div>
                 </div>
                 {/* CREATOR INFO */}
