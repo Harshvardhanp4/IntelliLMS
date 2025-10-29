@@ -137,6 +137,18 @@ function ViewCourses() {
         }
     }
 
+    const calculateAvgReview = (reviews) => {
+        if (!reviews || reviews.length === 0) {
+            return 0;
+        }
+        const total = reviews.reduce((sum, review) => sum + review.rating, 0)
+        return (total / reviews.length).toFixed(1)
+
+    }
+
+    const avgRating = calculateAvgReview(selectedCourse?.reviews)
+    console.log("Average Rating: ", avgRating)
+
 
 
     return (
@@ -155,7 +167,7 @@ function ViewCourses() {
                         <h2 className="text-2xl font-bold">{selectedCourse?.title}</h2>
                         <div className="flex items-start flex-col justify-between">
                             <div className="text-yellow-500 font-medium flex gap-2">
-                                <span className="flex items-center justify-start gap-1">5{" "}<IoStar /></span>
+                                <span className="flex items-center justify-start gap-1">{avgRating}{" "}<IoStar /></span>
                                 <span className="text-gray-400">(1,500 Reviews)</span>
                             </div>
                             <div className="pt-2">
