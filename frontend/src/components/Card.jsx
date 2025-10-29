@@ -2,8 +2,21 @@
 import { IoStar } from 'react-icons/io5'
 import { useNavigate } from 'react-router-dom'
 
-function Card({ title, category, price, id, thumbnail }) {
+function Card({ title, category, price, id, thumbnail, reviews }) {
     const navigate = useNavigate();
+
+    const calculateAvgReview = (reviews) => {
+        if (!reviews || reviews.length === 0) {
+            return 0;
+        }
+        const total = reviews.reduce((sum, review) => sum + review.rating, 0)
+        return (total / reviews.length).toFixed(1)
+
+    }
+
+    const avgRating = calculateAvgReview(reviews)
+
+
     return (
         <div className='max-w-sm w-full bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 border border-gray-300 hover:shadow-emerald-300 cursor-pointer' onClick={() => navigate(`/viewcourse/${id}`)}>
             <img src={thumbnail} alt="" className='w-full h-48 object-cover' />
@@ -13,7 +26,7 @@ function Card({ title, category, price, id, thumbnail }) {
 
                 <div className='flex justify-between text-sm text-gray-600 mt-3 px-[10px]'>
                     <span className='font-semibold text-gray-800'>₹{price}</span>
-                    <span className='flex items-center'>5<IoStar className='text-yellow-400' /></span>
+                    <span className='flex items-center'>{avgRating}<IoStar className='text-yellow-400' /></span>
                 </div>
             </div>
         </div>
