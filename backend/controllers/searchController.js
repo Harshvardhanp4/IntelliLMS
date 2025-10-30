@@ -12,10 +12,10 @@ export const searchWithAi = async (req, res) => {
         const courses = await Course.find({
             isPublished: true,
             $or: [
-                { title: { $regex: input, options: 'i' } },//insensitive
-                { subtitle: { $regex: input, options: 'i' } }, //insensitive
-                { category: { $regex: input, options: 'i' } }, //insensitive
-                { level: { $regex: input, options: 'i' } }, //insensitive
+                { title: { $regex: input, $options: 'i' } },//insensitive
+                { subtitle: { $regex: input, $options: 'i' } }, //insensitive
+                { category: { $regex: input, $options: 'i' } }, //insensitive
+                { level: { $regex: input, $options: 'i' } }, //insensitive
 
             ]
         });
