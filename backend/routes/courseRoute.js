@@ -3,6 +3,7 @@ import { createCourse, editCourse, getCourseById, getCreatorById, getCreatorCour
 import isAuth from "../middlewares/isAuth.js";
 import upload from "../middlewares/multer.js";
 import { createLecture, editLecture, getCourseLecture, removeLecture } from "../controllers/lectureController.js";
+import { searchWithAi } from "../controllers/searchController.js";
 
 
 const courseRouter = express.Router();
@@ -29,5 +30,13 @@ courseRouter.post("/editlecture/:lectureId", isAuth, upload.single("videoUrl"), 
 courseRouter.delete("/removelecture/:lectureId", isAuth, removeLecture)
 
 courseRouter.post("/creator", isAuth, getCreatorById)
+
+
+
+
+
+//SEARCH ROUTES
+
+courseRouter.post("/search", searchWithAi)
 
 export default courseRouter;

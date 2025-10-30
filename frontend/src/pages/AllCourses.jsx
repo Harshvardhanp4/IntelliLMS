@@ -55,7 +55,7 @@ function AllCourses() {
             <aside className={`w-[260px] h-screen overflow-y-auto bg-black fixed top-0 left-0 p-6 py-[130px] border-r border-gray-200 shadow-md transition-transform duration-300 z-5 ${isSideBarVisible ? "translate-x-0" : "-translate-x-full"} md:block md:translate-x-0`}>
                 <h2 className="text-xl font-bold flex items-center justify-center gap-2 text-gray-50 mb-6"><FaArrowLeftLong className="text-white cursor-pointer" size={20} onClick={() => navigate("/")} />Filter By Category</h2>
                 <form action="" className="space-y-4 text-sm bg-gray-200 border border-white text-white p-[20px]" onSubmit={(e) => e.preventDefault()}>
-                    <button className="px-[10px] py-[10px] bg-black text-white rounded-[10px] text-[15px] font-light flex items-center justify-center gap-2 cursor-pointer">Search with AI <img src={ai} alt="" className="w-[30px] h-[30px]" /></button>
+                    <button className="px-[10px] py-[10px] bg-black text-white rounded-[10px] text-[15px] font-light flex items-center justify-center gap-2 cursor-pointer" onClick={() => navigate("/search")}>Search with AI <img src={ai} alt="" className="w-[30px] h-[30px]" /></button>
                     <label htmlFor="" className="flex items-center gap-3 cursor-pointer hover:text-gray-800 transition text-black">
                         <input type="checkbox" className="accent-black w-4 h-4 rounded-md cursor-pointer" value={'App Dev'} onChange={toggleCategory} />App Development
                     </label>
