@@ -26,6 +26,7 @@ import getAllReviews from "./custom_hooks/getAllReviews";
 import SearchWithAi from "./pages/SearchWithAi";
 
 
+
 export const serverUrl = "http://localhost:8000";
 
 function App() {
@@ -42,7 +43,9 @@ function App() {
       <ToastContainer />
       <ScrollToTop />
       <Routes>
+
         <Route path="/" element={<Home />} />
+
 
         <Route
           path="/signup"

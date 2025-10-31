@@ -7,29 +7,29 @@ import sendMail from "../config/sendMail.js"
 
 //-------------------signup controller------------------
 
-export const signUp = async(req,res)=>{
-    try{
+export const signUp = async (req, res) => {
+    try {
         //
-        const {name, email, password, role} = req.body
-        let existingUser = await User.findOne({email})
-        if(existingUser){
+        const { name, email, password, role } = req.body
+        let existingUser = await User.findOne({ email })
+        if (existingUser) {
             return res.status(400).json({
                 message: "User already exists!"
             })
         }
-        if(!validator.isEmail(email)){
+        if (!validator.isEmail(email)) {
             return res.status(400).json({
                 message: "Enter valid email"
             })
         }
-        if(password.length <6){
+        if (password.length < 6) {
             return res.status(400).json({
                 message: "Enter strong password"
             })
         }
 
         //hash pass section
-        let hashPassword = await bcrypt.hash(password,10)
+        let hashPassword = await bcrypt.hash(password, 10)
 
         //create user section
 
@@ -43,92 +43,92 @@ export const signUp = async(req,res)=>{
         //token generate
 
         let token = await getToken(user._id)
-        res.cookie("token", token,{
+        res.cookie("token", token, {
             httpOnly: true,
-            secure: false,
-            sameSite: "Strict",
+            secure: true,
+            sameSite: "none",
             maxAge: 7 * 24 * 60 * 60 * 1000
         })
         return res.status(201).json(user)
 
-    }catch(error){
+    } catch (error) {
         return res.status(500).json({
-            message:`SignUp error ${error}`
+            message: `SignUp error ${error}`
         })
     }
 }
 
 //-------------------login controller------------------//
 
-export const login = async(req,res) =>{
-    try{
-        const {email, password} = req.body
-        
-        let user = await User.findOne({email})
-        if(!user){
+export const login = async (req, res) => {
+    try {
+        const { email, password } = req.body
+
+        let user = await User.findOne({ email })
+        if (!user) {
             return res.status(404).json({
-                message:"User not found"
+                message: "User not found"
             })
         }
         let isMatch = await bcrypt.compare(password, user.password)
-        if(!isMatch){
+        if (!isMatch) {
             return res.status(400).json({
                 message: "Invalid credentials"
             })
         }
-         let token = await getToken(user._id)
-        res.cookie("token", token,{
+        let token = await getToken(user._id)
+        res.cookie("token", token, {
             httpOnly: true,
-            secure: false,
-            sameSite: "Strict",
+            secure: true,
+            sameSite: "none",
             maxAge: 7 * 24 * 60 * 60 * 1000
         })
         return res.status(200).json(user)
 
-    }catch(error){
+    } catch (error) {
         return res.status(500).json({
-            message:`Login error ${error}`
+            message: `Login error ${error}`
         })
     }
 }
 
 //--- Logout controller ----
 
-export const logOut = async (req,res)=>{
-    try{
+export const logOut = async (req, res) => {
+    try {
         await res.clearCookie("token")
         return res.status(200).json({
             message: "Logged Out Successfully"
         })
-    }catch(error){
+    } catch (error) {
         return res.status(500).json({
-            message:`Logout error ${error}`
+            message: `Logout error ${error}`
         })
     }
 }
 
 //----------------setOtp Controller---------------//
 
-export const sendOTP = async (req,res)=>{
-    try{
-        const {email} = req.body
-        const user = await User.findOne({email})
-        if(!user){
+export const sendOTP = async (req, res) => {
+    try {
+        const { email } = req.body
+        const user = await User.findOne({ email })
+        if (!user) {
             return res.status(404).json({
-                message:"User not found"
+                message: "User not found"
             })
         }
-        const otp = Math.floor(1000 + Math.random()* 9000).toString();
+        const otp = Math.floor(1000 + Math.random() * 9000).toString();
         user.resetOtp = otp,
-        user.otpExpires = Date.now() + 5 * 60 * 1000 //1000 ms
+            user.otpExpires = Date.now() + 5 * 60 * 1000 //1000 ms
         user.isOtpVerified = false
 
         await user.save()
         await sendMail(email, otp)
         res.status(200).json({
-            msg:"Otp sent successfully"
+            msg: "Otp sent successfully"
         })
-    }catch(error){
+    } catch (error) {
         return res.status(500).json({
             msg: "Error while sending OTP"
         })
@@ -139,28 +139,28 @@ export const sendOTP = async (req,res)=>{
 //----------------Verify OTP------------------------//
 
 
-export const verifyOTP = async(req,res)=>{
-    try{
-        const {email, otp} = req.body
-        const user = await User.findOne({email})
-        if(!user || user.resetOtp != otp || user.otpExpires < Date.now()){
+export const verifyOTP = async (req, res) => {
+    try {
+        const { email, otp } = req.body
+        const user = await User.findOne({ email })
+        if (!user || user.resetOtp != otp || user.otpExpires < Date.now()) {
             return res.status(404).json({
-                message:"Invalid OTP"
+                message: "Invalid OTP"
             })
         }
         user.isOtpVerified = true
         user.resetOtp = undefined,
-        user.otpExpires = undefined
-        
+            user.otpExpires = undefined
+
         await user.save();
 
-         res.status(200).json({
-            msg:"Otp Verified successfully"
+        res.status(200).json({
+            msg: "Otp Verified successfully"
         })
 
     }
-    catch{
-         return res.status(500).json({
+    catch {
+        return res.status(500).json({
             msg: "Error while verifiying OTP"
         })
     }
@@ -169,26 +169,26 @@ export const verifyOTP = async(req,res)=>{
 
 //-------------------------ResetPassword----------------//
 
-export const ResetPassword = async (req,res) => {
-    try{
-        const {email, password} = req.body
-         const user = await User.findOne({email})
-        if(!user || !user.isOtpVerified){
+export const ResetPassword = async (req, res) => {
+    try {
+        const { email, password } = req.body
+        const user = await User.findOne({ email })
+        if (!user || !user.isOtpVerified) {
             return res.status(404).json({
-                message:"OTP Verification is required"
+                message: "OTP Verification is required"
             })
         }
         const hashPassword = await bcrypt.hash(password, 10);
         user.password = hashPassword,
-        user.isOtpVerified = false,
+            user.isOtpVerified = false,
 
-        await user.save()
+            await user.save()
 
-          res.status(200).json({
-            msg:"Reset Password successfully"
+        res.status(200).json({
+            msg: "Reset Password successfully"
         })
-    }catch(error){
-         return res.status(500).json({
+    } catch (error) {
+        return res.status(500).json({
             msg: "Error while password reset"
         })
     }
@@ -196,22 +196,22 @@ export const ResetPassword = async (req,res) => {
 
 //--------------Google Signup--------------//
 
-export const googleAuth =  async(req,res)=>{
+export const googleAuth = async (req, res) => {
     try {
-        const {name, email, role} = req.body
-        const user = await User.findOne({email})
-        if(!user){
+        const { name, email, role } = req.body
+        const user = await User.findOne({ email })
+        if (!user) {
             user = await User.create({
                 name,
                 email,
                 role
             })
         }
-         let token = await getToken(user._id)
-        res.cookie("token", token,{
+        let token = await getToken(user._id)
+        res.cookie("token", token, {
             httpOnly: true,
-            secure: false,
-            sameSite: "Strict",
+            secure: true,
+            sameSite: "none",
             maxAge: 7 * 24 * 60 * 60 * 1000
         })
         return res.status(201).json(user)
