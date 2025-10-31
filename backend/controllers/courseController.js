@@ -72,8 +72,10 @@ export const editCourse = async (req, res) => {
         return res.status(200).json(course)
 
     } catch (error) {
+        console.log(error)
         return res.status(500).json({
             msg: "Failed to edit course"
+
         })
     }
 }
