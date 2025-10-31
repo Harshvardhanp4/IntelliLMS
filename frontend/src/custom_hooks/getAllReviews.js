@@ -5,6 +5,8 @@ import { useDispatch } from "react-redux"
 import { setReviewData } from "../redux/reviewSlice"
 
 
+const serverUrl = import.meta.env.VITE_SERVER_URL || "http://localhost:8000";
+
 const getAllReviews = () => {
     const dispatch = useDispatch()
 
@@ -12,7 +14,7 @@ const getAllReviews = () => {
 
         const allReviews = async () => {
             try {
-                const result = await axios.get(serverUrl + "/api/review/getreview", { withCredentials: true })
+                const result = await axios.get(`${serverUrl}/api/review/getreview`, { withCredentials: true })
                 dispatch(setReviewData(result.data))
                 console.log(result.data)
             } catch (error) {

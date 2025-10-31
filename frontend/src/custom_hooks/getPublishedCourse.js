@@ -1,15 +1,16 @@
 import { useEffect } from "react"
 import axios from 'axios'
-
 import { useDispatch } from "react-redux"
 import { setCourseData } from "../redux/courseSlice"
+
+const serverUrl = import.meta.env.VITE_SERVER_URL || "http://localhost:8000";
 
 const getPublishedCourse = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         const getCourseData = async () => {
             try {
-                const result = await axios.get("http://localhost:8000" + "/api/course/getpublished", { withCredentials: true })
+                const result = await axios.get(`${serverUrl}/api/course/getpublished`, { withCredentials: true })
                 dispatch(setCourseData(result.data))
                 console.log(result.data)
             } catch (error) {
