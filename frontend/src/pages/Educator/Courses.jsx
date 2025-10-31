@@ -21,7 +21,7 @@ function Courses() {
         dispatch(setCreatorCourseData(result.data));
       } catch (error) {
         console.log(error)
-        toast.error("Some Error Occured")
+
       }
     }
     creatorCourses()
