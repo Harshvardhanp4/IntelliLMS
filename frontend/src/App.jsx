@@ -7,7 +7,7 @@ import { ToastContainer } from "react-toastify";
 import getCurrentUser from "./custom_hooks/getCurrentUser";
 import { useSelector } from "react-redux";
 import Profile from "./pages/Profile";
-import ForgetPassword from "./pages/forgetPassword";
+import ForgetPassword from "./pages/ForgetPassword";
 import EditProfile from "./pages/EditProfile";
 import Dashboard from "./pages/Educator/Dashboard";
 import Courses from "./pages/Educator/Courses";
