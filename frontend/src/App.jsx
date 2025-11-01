@@ -25,7 +25,7 @@ import MyEnrolledCourses from "./pages/MyEnrolledCourses";
 import getAllReviews from "./custom_hooks/getAllReviews";
 import SearchWithAi from "./pages/SearchWithAi";
 
-export const serverUrl = import.meta.env.VITE_BACKEND_URL;
+export const serverUrl = import.meta.env.VITE_BACKEND_URL || "http://localhost:8000";
 
 function App() {
   getCurrentUser();
