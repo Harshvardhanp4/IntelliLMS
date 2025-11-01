@@ -2,8 +2,7 @@ import axios from "axios"
 import { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { setReviewData } from "../redux/reviewSlice"
-
-const serverUrl = "http://localhost:8000"
+import { serverUrl } from "../App"
 
 const getAllReviews = () => {
     const dispatch = useDispatch()
