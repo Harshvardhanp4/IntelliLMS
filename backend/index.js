@@ -29,8 +29,8 @@ app.get("/", (req, res) => {
 });
 
 const startServer = async () => {
-    await connectDb(); // ✅ Connect DB BEFORE routes and server start
-    console.log("✅ DB connected. Starting server...");
+    await connectDb();
+    console.log(" DB connected. Starting server...");
 
     app.use("/api/auth", authRouter);
     app.use("/api/user", userRouter);
@@ -39,7 +39,7 @@ const startServer = async () => {
     app.use("/api/review", reviewRouter);
 
     app.listen(port, () => {
-        console.log(`🚀 Server running on PORT ${port}`);
+        console.log(` Server running on PORT ${port}`);
     });
 };
 
