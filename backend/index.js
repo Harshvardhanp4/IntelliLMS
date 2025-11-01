@@ -16,9 +16,10 @@ app.use(express.json());
 app.use(cookieParser())
 
 app.use(cors({
-    origin: "*",
+    origin: "https://intelli-lms-main.vercel.app", 
     credentials: true
 }));
+
 app.use("/api/auth", authRouter)
 app.use("/api/user", userRouter)
 app.use("/api/course", courseRouter)
