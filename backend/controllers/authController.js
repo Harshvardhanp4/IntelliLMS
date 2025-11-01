@@ -3,6 +3,7 @@ import validator from "validator"
 import bcrypt from "bcryptjs"
 import getToken from "../config/token.js"
 import sendMail from "../config/sendMail.js"
+import crypto from "crypto"
 
 
 //-------------------signup controller------------------
@@ -201,10 +202,15 @@ export const googleAuth = async (req, res) => {
         const { name, email, role } = req.body
         let user = await User.findOne({ email })
         if (!user) {
+
+            const randomPassword = crypto.randomBytes(16).toString("hex");
+            const hashedPassword = await bcrypt.hash(randomPassword, 10);
+
             user = await User.create({
                 name,
                 email,
-                role
+                role,
+                password: hashedPassword
             })
         }
         let token = await getToken(user._id)
