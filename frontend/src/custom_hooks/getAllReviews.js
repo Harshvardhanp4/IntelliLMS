@@ -3,8 +3,7 @@ import { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { setReviewData } from "../redux/reviewSlice"
 
-
-const serverUrl = import.meta.env.VITE_SERVER_URL || "http://localhost:8000";
+const serverUrl = "http://localhost:8000"
 
 const getAllReviews = () => {
     const dispatch = useDispatch()
@@ -22,7 +21,7 @@ const getAllReviews = () => {
             }
         }
         allReviews()
-    }, [])
+    }, [dispatch, serverUrl])
 
 
 

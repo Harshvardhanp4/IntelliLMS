@@ -2,8 +2,7 @@ import React, { useEffect } from 'react'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { setCreatorCourseData } from '../redux/courseSlice'
-
-const serverUrl = import.meta.env.VITE_SERVER_URL || "http://localhost:8000";
+import { serverUrl } from '../App'
 
 const getCreatorCourse = () => {
     const dispatch = useDispatch()

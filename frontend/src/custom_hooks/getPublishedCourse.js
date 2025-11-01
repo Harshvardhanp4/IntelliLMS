@@ -2,8 +2,7 @@ import { useEffect } from "react"
 import axios from 'axios'
 import { useDispatch } from "react-redux"
 import { setCourseData } from "../redux/courseSlice"
-
-const serverUrl = import.meta.env.VITE_SERVER_URL || "http://localhost:8000";
+import { serverUrl } from "../App"
 
 const getPublishedCourse = () => {
     const dispatch = useDispatch();

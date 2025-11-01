@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { FaArrowLeftLong } from 'react-icons/fa6'
 import ai from "../assets/ai.png"
-import ai1 from "../assets/SearchAi.png"
 import { RiMicAiFill } from "react-icons/ri";
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
