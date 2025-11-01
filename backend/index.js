@@ -16,7 +16,8 @@ app.use(express.json());
 app.use(cookieParser())
 
 app.use(cors({
-    origin: "*"
+    origin: "*",
+    credentials: true
 }));
 app.use("/api/auth", authRouter)
 app.use("/api/user", userRouter)
