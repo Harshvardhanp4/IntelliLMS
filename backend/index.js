@@ -16,9 +16,13 @@ app.use(express.json());
 app.use(cookieParser())
 
 app.use(cors({
-    origin: [process.env.CLIENT_URL || "http://localhost:5173"],
+    origin: [
+        "http://localhost:5173",
+        "https://intelli-lms-main.vercel.app"
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
-}))
+}));
 
 app.use("/api/auth", authRouter)
 app.use("/api/user", userRouter)
