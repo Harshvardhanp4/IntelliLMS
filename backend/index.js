@@ -3,7 +3,6 @@ import dotenv from 'dotenv'
 import connectDb from './config/connectdb.js';
 import cookieParser from 'cookie-parser';
 import authRouter from './routes/authRoute.js';
-import cors from "cors";
 import userRouter from './routes/userRoute.js';
 import courseRouter from './routes/courseRoute.js';
 import paymentRouter from './routes/paymentRoute.js';
@@ -14,16 +13,6 @@ const port = process.env.PORT
 const app = express();
 app.use(express.json());
 app.use(cookieParser())
-
-app.use(cors({
-    origin: [
-        "http://localhost:5173",
-        "https://intelli-lms-main.vercel.app"
-    ],
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true
-}));
-
 app.use("/api/auth", authRouter)
 app.use("/api/user", userRouter)
 app.use("/api/course", courseRouter)
