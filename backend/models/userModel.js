@@ -2,49 +2,50 @@ import mongoose from "mongoose";
 
 
 const userSchema = new mongoose.Schema({
-    name:{
+    name: {
         type: String,
         required: true
     },
-    description:{
+    description: {
         type: String
     },
-    email:{
+    email: {
         type: String,
         required: true,
         unique: true
     },
-    password:{
+    password: {
         type: String,
         required: true
     },
-    role:{
+    role: {
         type: String,
-        enum:["student", "educator"],
+        enum: ["student", "educator"],
+        default: "student",
         required: true
     },
-    photoUrl:{
+    photoUrl: {
         type: String,
-        default:""
+        default: ""
     },
-    enrolledCourses:[{
+    enrolledCourses: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Course"
     }],
-    resetOtp:{
-        type:String
+    resetOtp: {
+        type: String
     },
-    otpExpires:{
+    otpExpires: {
         type: Date
     },
-    isOtpVerified:{
+    isOtpVerified: {
         type: Boolean,
         default: false
     },
-        
-    
 
-},{timestamps:true})
+
+
+}, { timestamps: true })
 
 const User = mongoose.model("User", userSchema)
 

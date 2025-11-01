@@ -12,6 +12,7 @@ export const signUp = async (req, res) => {
     try {
         //
         const { name, email, password, role } = req.body
+        const userRole = role || "student"
         let existingUser = await User.findOne({ email })
         if (existingUser) {
             return res.status(400).json({
@@ -38,7 +39,7 @@ export const signUp = async (req, res) => {
             name,
             email,
             password: hashPassword,
-            role
+            role: userRole
         })
 
         //token generate
@@ -209,7 +210,7 @@ export const googleAuth = async (req, res) => {
             user = await User.create({
                 name,
                 email,
-                role,
+                role: role || "student",
                 password: hashedPassword
             })
         }
