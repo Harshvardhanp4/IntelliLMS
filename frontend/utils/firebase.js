@@ -18,6 +18,6 @@ const app = initializeApp(firebaseConfig);
 
 const auth = getAuth(app)
 const provider = new GoogleAuthProvider()
-provider.setCustomParameters({ prompt: 'select_account' });
+provider.setCustomParameters({ prompt: 'select_account' }); //this fixes the double click to single click login / signup 
 
 export { auth, provider }
