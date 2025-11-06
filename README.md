@@ -2,6 +2,7 @@
 
 IntelliLMS is a next-generation **AI-powered Learning Management System** built using the **MERN Stack (MongoDB, Express.js, React.js, Node.js)**. It integrates modern web technologies with artificial intelligence to deliver smarter, more efficient online education experiences.
 
+CHECK LIVE DEMO HERE:- https://intellilms-5w9k.onrender.com/
 ---
 
 ## 🚀 Features
