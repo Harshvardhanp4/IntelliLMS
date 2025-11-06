@@ -13,13 +13,19 @@ const transporter = nodemailer.createTransport({
   },
 });
 
- const sendMail = async (to, otp)=>{
-    await transporter.sendMail({
-    from: process.env.USER_EMAIL,
-    to: to,
-    subject: "Reset your password",
-    html: `<p>Your OTP for Password Reset is <b>${otp} It will expire in 5 minutes</b></p>`
-  });
- }
+const sendMail = async (to, otp) => {
+  try {
+    const result = await transporter.sendMail({
+      from: process.env.USER_EMAIL,
+      to: to,
+      subject: "Reset your password",
+      html: `<p>Your OTP for Password Reset is <b>${otp}</b>. It will expire in 5 minutes</p>`
+    });
+    return result;
+  } catch (error) {
+    console.log('Email error:', error);
+    throw error;  // This is crucial for the timeout wrapper to work
+  }
+}
 
- export default sendMail;
+export default sendMail;

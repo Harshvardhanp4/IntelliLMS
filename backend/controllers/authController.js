@@ -126,7 +126,12 @@ export const sendOTP = async (req, res) => {
         user.isOtpVerified = false
 
         await user.save()
-        await sendMail(email, otp)
+        await Promise.race([
+            sendMail(email, otp),
+            new Promise((_, reject) =>
+                setTimeout(() => reject(new Error('Email timeout')), 25000)
+            )
+        ]);
         res.status(200).json({
             msg: "Otp sent successfully"
         })
