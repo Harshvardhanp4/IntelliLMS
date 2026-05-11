@@ -73,7 +73,8 @@ export const searchWithAi = async (req, res) => {
 
     } catch (error) {
         return res.status(500).json({
-            msg: "Failed to search"
+            msg: "Failed to search",
+            error: error.message
         })
     }
 }
