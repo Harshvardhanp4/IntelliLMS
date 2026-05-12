@@ -36,9 +36,12 @@ export const searchWithAi = async (req, res) => {
         const response = await ai.models.generateContent({
             model: "gemini-2.5-flash",
             contents: prompt,
-        });
+        })
 
-        const keyword = response.text
+        console.log(response);
+
+
+        const keyword = response.text || input
         const courses = await Course.find({
             isPublished: true,
             $or: [
